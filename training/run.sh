@@ -1,0 +1,1 @@
+echo "Vittu Sasu" && docker build -t kurkkumopotin_train . && docker run -it -v model:/src/model -v /home/local/sasumaki/toska/dockerKURS/training:/src kurkkumopotin_train
