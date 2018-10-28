@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  client:
+    image: kurkkumopotin-client:latest
+    restart: unless-stopped
+    container_name: kurkkumopotin-client
+  server:
+    image: kurkkumopotin-server:latest
+    ports:
+      - 5000:5000
+    restart: unless-stopped
+    container_name: kurkkumopotin-server
+    volumes:
+      - ./model:/src/model
+  training:
+    image: kurkkumopotin-training:latest
+    restart: unless-stopped
+    container_name: kurkkumopotin-training
+    volumes:
+      - ./model:/src/model
+      - ./imgs:/src/imgs
