@@ -7,7 +7,7 @@ services:
     volumes:
       - model:/src/model
       - imgs:/src/imgs
-      - /home/kapxy/kurkkumopotin/training/data:/src/data
+      - ./kurkkumopotin/training/data:/src/data
   client:
     build: ./client
     ports:
