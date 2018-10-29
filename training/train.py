@@ -58,27 +58,25 @@ def get_images(prefix, url):
 if __name__ == "__main__":
     K.clear_session()
 
-    cucumberinos = Path("cucumbers2.csv")
-    if not cucumberinos.is_file():
  
-        cucumbers = pd.read_csv("cucumber.csv")
-        mopeds = pd.read_csv('moped.csv')
-        
-        p = Pool(100)
-        
-        print("gathering cucumbers...")
-        func = partial(get_images, "cucumber_")
-        cucumber_imgs = p.map(func, cucumbers["url"])
-        print("gathering mopeds...")
-        func = partial(get_images, "moped_")
-        moped_imgs = p.map(func, mopeds["url"])
-        p.close()
-        cucumbers = pd.DataFrame({"uri": cucumber_imgs, "y": 0})
-        cucumbers.to_csv("cucumbers2.csv")
-        mopeds = pd.DataFrame({"uri": moped_imgs, "y": 1})
-        mopeds.to_csv("mopeds2.csv")
+    cucumbers = pd.read_csv("./data/cucumber.csv")
+    mopeds = pd.read_csv('./data/moped.csv')
     
-    merged = pd.concat([pd.read_csv("cucumbers2.csv"), pd.read_csv("mopeds2.csv")])
+    p = Pool(100)
+    
+    print("gathering cucumbers...")
+    func = partial(get_images, "cucumber_")
+    cucumber_imgs = p.map(func, cucumbers["url"])
+    print("gathering mopeds...")
+    func = partial(get_images, "moped_")
+    moped_imgs = p.map(func, mopeds["url"])
+    p.close()
+    cucumbers = pd.DataFrame({"uri": cucumber_imgs, "y": 0})
+    cucumbers.to_csv("./data/cucumbers2.csv")
+    mopeds = pd.DataFrame({"uri": moped_imgs, "y": 1})
+    mopeds.to_csv("./data/mopeds2.csv")
+
+    merged = pd.concat([pd.read_csv("./data/cucumbers2.csv"), pd.read_csv("./data/mopeds2.csv")])
     merged = merged.dropna()
     X = merged.drop(["y"], axis=1)
     y = merged.drop(["uri"], axis=1)
