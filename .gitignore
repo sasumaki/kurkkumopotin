@@ -1,3 +1,5 @@
 .vscode
 training/imgs
 client/node_modules
+training/data/cucumbers2.csv
+training/data/mopeds2.csv
