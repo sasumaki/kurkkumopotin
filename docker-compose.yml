@@ -1,26 +1,27 @@
 version: '3'
 
 services:
+  training:
+    build: ./training
+    container_name: kurkkumopotin-training
+    volumes:
+      - model:/src/model
+      - imgs:/src/imgs
+      - /home/kapxy/kurkkumopotin/training/data:/src/data
   client:
-    image: kurkkumopotin-client:latest
+    build: ./client
+    ports:
+      - 3000:3000
     restart: unless-stopped
     container_name: kurkkumopotin-client
   server:
-    image: kurkkumopotin-server:latest
+    build: ./server
     ports:
       - 5000:5000
     restart: unless-stopped
     container_name: kurkkumopotin-server
     volumes:
       - model:/src/model
-  training:
-    image: kurkkumopotin-training:latest
-    restart: unless-stopped
-    container_name: kurkkumopotin-training
-    volumes:
-      - model:/src/model
-      - imgs:/src/imgs
-      - /home/kapxy/kurkkumopotin/training/data:/src/data
 volumes:
   model:
   imgs:
