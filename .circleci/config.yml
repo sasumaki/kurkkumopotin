@@ -77,7 +77,7 @@ jobs:
             service=kurkkumopotin
             namespace=workshop
 
-            if kubeimctl get service ${service}-lb -n ${namespace} > /dev/null; then
+            if kubectl get service ${service}-lb -n ${namespace} > /dev/null; then
               kubectl delete service ${service}-lb -n ${namespace};
             fi
             kubectl apply -f ./manifests/service.yaml -f ./manifests/deployment.yaml
