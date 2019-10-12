@@ -44,7 +44,7 @@ jobs:
             docker build -t ${image_training}:${CIRCLE_SHA1} ./training
             docker push ${image_training}:${CIRCLE_SHA1}
 
-            docker build -t ${image-client}:${CIRCLE_SHA1} ./client
+            docker build -t ${image_client}:${CIRCLE_SHA1} ./client
             docker push ${image_client}:${CIRCLE_SHA1}
 
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
