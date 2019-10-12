@@ -32,11 +32,11 @@ jobs:
             gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io >/dev/null 2>&1
 
             set -x
-            image-server=gcr.io/unity-ads-workshop-test/kurkkumopotin-server
+              image-server=gcr.io/unity-ads-workshop-test/kurkkumopotin-server
             set -x
-            image-training=gcr.io/unity-ads-workshop-test/kurkkumopotin-training
+              image-training=gcr.io/unity-ads-workshop-test/kurkkumopotin-training
             set -x
-            image-client=gcr.io/unity-ads-workshop-test/kurkkumopotin-client
+              image-client=gcr.io/unity-ads-workshop-test/kurkkumopotin-client
 
             docker build -t ${image-server}:${CIRCLE_SHA1} .
             docker push ${image-server}:${CIRCLE_SHA1}
