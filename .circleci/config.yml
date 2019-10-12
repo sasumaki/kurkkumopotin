@@ -33,7 +33,9 @@ jobs:
 
             set -x
             image-server=gcr.io/unity-ads-workshop-test/kurkkumopotin-server
+            set -x
             image-training=gcr.io/unity-ads-workshop-test/kurkkumopotin-training
+            set -x
             image-client=gcr.io/unity-ads-workshop-test/kurkkumopotin-client
 
             docker build -t ${image-server}:${CIRCLE_SHA1} .
