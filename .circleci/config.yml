@@ -32,28 +32,28 @@ jobs:
             gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://gcr.io >/dev/null 2>&1
 
             set -x
-              image-server=gcr.io/unity-ads-workshop-test/kurkkumopotin-server
+              image_server=gcr.io/unity-ads-workshop-test/kurkkumopotin-server
             set -x
-              image-training=gcr.io/unity-ads-workshop-test/kurkkumopotin-training
+              image_training=gcr.io/unity-ads-workshop-test/kurkkumopotin-training
             set -x
-              image-client=gcr.io/unity-ads-workshop-test/kurkkumopotin-client
+              image_client=gcr.io/unity-ads-workshop-test/kurkkumopotin-client
 
-            docker build -t ${image-server}:${CIRCLE_SHA1} ./server
-            docker push ${image-server}:${CIRCLE_SHA1}
+            docker build -t ${image_server}:${CIRCLE_SHA1} ./server
+            docker push ${image_server}:${CIRCLE_SHA1}
 
-            docker build -t ${image-training}:${CIRCLE_SHA1} ./training
-            docker push ${image-training}:${CIRCLE_SHA1}
+            docker build -t ${image_training}:${CIRCLE_SHA1} ./training
+            docker push ${image_training}:${CIRCLE_SHA1}
 
             docker build -t ${image-client}:${CIRCLE_SHA1} ./client
-            docker push ${image-client}:${CIRCLE_SHA1}
+            docker push ${image_client}:${CIRCLE_SHA1}
 
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              docker tag ${image-server}:${CIRCLE_SHA1} ${image-server}:master
-              docker push ${image-server}:master
-              docker tag ${image-training}:${CIRCLE_SHA1} ${image-training}:master
-              docker push ${image-training}:master
-              docker tag ${image-client}:${CIRCLE_SHA1} ${image-client}:master
-              docker push ${image-client}:master
+              docker tag ${image_server}:${CIRCLE_SHA1} ${image_server}:master
+              docker push ${image_server}:master
+              docker tag ${image_training}:${CIRCLE_SHA1} ${image_training}:master
+              docker push ${image_training}:master
+              docker tag ${image_client}:${CIRCLE_SHA1} ${image_client}:master
+              docker push ${image_client}:master
             fi
 
   deploy:
