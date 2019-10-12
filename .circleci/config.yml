@@ -38,13 +38,13 @@ jobs:
             set -x
               image-client=gcr.io/unity-ads-workshop-test/kurkkumopotin-client
 
-            docker build -t ${image-server}:${CIRCLE_SHA1} .
+            docker build -t ${image-server}:${CIRCLE_SHA1} ./server
             docker push ${image-server}:${CIRCLE_SHA1}
 
-            docker build -t ${image-training}:${CIRCLE_SHA1} .
+            docker build -t ${image-training}:${CIRCLE_SHA1} ./training
             docker push ${image-training}:${CIRCLE_SHA1}
 
-            docker build -t ${image-client}:${CIRCLE_SHA1} .
+            docker build -t ${image-client}:${CIRCLE_SHA1} ./client
             docker push ${image-client}:${CIRCLE_SHA1}
 
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
