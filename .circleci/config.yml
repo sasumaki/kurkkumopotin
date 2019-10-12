@@ -50,9 +50,9 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker tag ${image-server}:${CIRCLE_SHA1} ${image-server}:master
               docker push ${image-server}:master
-                docker tag ${image-training}:${CIRCLE_SHA1} ${image-training}:master
+              docker tag ${image-training}:${CIRCLE_SHA1} ${image-training}:master
               docker push ${image-training}:master
-                docker tag ${image-client}:${CIRCLE_SHA1} ${image-client}:master
+              docker tag ${image-client}:${CIRCLE_SHA1} ${image-client}:master
               docker push ${image-client}:master
             fi
 
