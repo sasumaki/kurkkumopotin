@@ -74,14 +74,19 @@ jobs:
             gcloud container clusters get-credentials ${WORKSHOP_CLUSTER} --zone ${WORKSHOP_CLUSTER_ZONE} --project ${WORKSHOP_GCP_PROJECT}
             kubectl config current-context
 
-            service=rasmus-nodejs-docker-webapp
+            service=kurkkumopotin
             namespace=workshop
 
-            if kubectl get service ${service}-lb -n ${namespace} > /dev/null; then
+            if kubeimctl get service ${service}-lb -n ${namespace} > /dev/null; then
               kubectl delete service ${service}-lb -n ${namespace};
             fi
             kubectl apply -f ./manifests/service.yaml -f ./manifests/deployment.yaml
-            kubectl expose deployment -n ${namespace} ${service} --type=LoadBalancer --name=${service}-lb --port=8080
+
+            kubectl patch deployment -n ${namespace} ${service} -p  "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+
+            kubectl expose deployment -n ${namespace} ${service} --type=LoadBalancer --name=${service}-lb --port=5000
+            kubectl expose deployment -n ${namespace} ${service} --type=LoadBalancer --name=${service}-lb2 --port=3000
+
             kubectl get all -n ${namespace} | grep ${service}
             kubectl describe -n ${namespace} service/${service}-lb || true
 
@@ -89,10 +94,10 @@ workflows:
   build_update_deploy:
     jobs:
       - build
-      # - deploy:
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
-      #     requires:
-      #       - build
+      - deploy:
+          filters:
+            branches:
+              only:
+                - master
+          requires:
+            - build

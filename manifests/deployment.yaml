@@ -1,0 +1,74 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: workshop
+  name: kurkkumopotin
+  labels:
+    app: kurkkumopotin
+
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kurkkumopotin
+
+  template:
+    metadata:
+      labels:
+        app: kurkkumopotin
+      annotations:
+    spec:
+      containers:
+        - image: gcr.io/unity-ads-workshop-test/kurkkumopotin-server:master
+          name: kurkkumopotin-server
+          volumeMounts:
+          - name: model
+            mountPath: /src/model
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 0.1
+              memory: 128Mi
+            limits:
+              cpu: 0.5
+              memory: 1024Mi
+
+              
+        - image: gcr.io/unity-ads-workshop-test/kurkkumopotin-client:master
+          name: kurkkumopotin-client
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 0.1
+              memory: 128Mi
+            limits:
+              cpu: 0.5
+              memory: 1024Mi
+              
+        - image: gcr.io/unity-ads-workshop-test/kurkkumopotin-training:master
+          name: kurkkumopotin-training
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 0.1
+              memory: 128Mi
+            limits:
+              cpu: 0.5
+              memory: 1024Mi
+          volumeMounts:
+              - name: model
+                mountPath: /src/model
+              - name: imgs
+                mountPath: /src/imgs
+                
+      volumes:
+      - name: model
+        emptyDir: {}
+      - name: imgs
+        emptyDir: {}
+
+      nodeSelector:
+        cloud.google.com/gke-nodepool: workshop-pool
+
+ 
